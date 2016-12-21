@@ -1,0 +1,14 @@
+<template>
+  <div class="">
+    <h1>${message}</h1>
+    <form method="post" submit.trigger="addTodo()">
+      <input type="text" placeholer="What would you like to do?" value.bind="todoTitle">
+      <button type="submit">Add</button>
+    </form>
+    <ul>
+      <li repeat.for="t of todos">
+        <input type="checkbox" checked.bind='t.completed' />
+        <span class.bind="t.completed ? 'strikeout' : ''">${t.title}</span>
+      </li>
+    </ul>
+</template>
