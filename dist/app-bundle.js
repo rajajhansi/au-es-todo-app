@@ -1,4 +1,4 @@
-define('app',['exports', './todo'], function (exports, _todo) {
+define('app',['exports', './models/todo'], function (exports, _todo) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -16,9 +16,9 @@ define('app',['exports', './todo'], function (exports, _todo) {
     function App() {
       _classCallCheck(this, App);
 
-      this.todos = [new _todo.Todo('Task one', false), new _todo.Todo('Task two', false), new _todo.Todo('Task three', false)];
+      this.appName = 'Todo List';
       this.todoTitle = '';
-      this.message = 'Todo List';
+      this.todos = [new _todo.Todo('Task one', false), new _todo.Todo('Task two', false), new _todo.Todo('Task three', false)];
     }
 
     App.prototype.addTodo = function addTodo() {
@@ -79,12 +79,13 @@ define('main',['exports', './environment'], function (exports, _environment) {
     });
   }
 });
-define('todo',["exports"], function (exports) {
+define('models/todo',["exports", "./idgenerator"], function (exports, _idgenerator) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.Todo = undefined;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -97,9 +98,7 @@ define('todo',["exports"], function (exports) {
 
     _classCallCheck(this, Todo);
 
-    this.lastId = 0;
-
-    this.id = ++this.lastId;
+    this.id = _idgenerator.IdGenerator.getNextId();
     this.title = title;
     this.completed = completed;
   };
@@ -113,5 +112,34 @@ define('resources/index',["exports"], function (exports) {
   exports.configure = configure;
   function configure(config) {}
 });
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"\">\n    <h1>${message}</h1>\n    <form method=\"post\" submit.trigger=\"addTodo()\">\n      <input type=\"text\" placeholer=\"What would you like to do?\" value.bind=\"todoTitle\">\n      <button type=\"submit\">Add</button>\n    </form>\n    <ul>\n      <li repeat.for=\"t of todos\">\n        <input type=\"checkbox\" checked.bind='t.completed' />\n        <span class.bind=\"t.completed ? 'strikeout' : ''\">${t.title}</span>\n      </li>\n    </ul>\n</template>\n"; });
+define('models/idgenerator',["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _IdGenerator = function () {
+    function _IdGenerator() {
+      _classCallCheck(this, _IdGenerator);
+
+      this.id = 0;
+    }
+
+    _IdGenerator.prototype.getNextId = function getNextId() {
+      return ++this.id;
+    };
+
+    return _IdGenerator;
+  }();
+
+  var IdGenerator = exports.IdGenerator = new _IdGenerator();
+});
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"\">\n    <h1>${appName}</h1>\n    <form method=\"post\" submit.trigger=\"addTodo()\">\n      <input type=\"text\" placeholder=\"What would you like to do?\" value.bind=\"todoTitle\">\n      <button type=\"submit\">Add</button>\n    </form>\n    <ul>\n      <li repeat.for=\"t of todos\">\n        <input type=\"checkbox\" checked.bind='t.completed' />\n        <span class.bind=\"t.completed ? 'strikeout' : ''\">${t.id} - ${t.title}</span>\n      </li>\n    </ul>\n</template>\n"; });
 //# sourceMappingURL=app-bundle.js.map

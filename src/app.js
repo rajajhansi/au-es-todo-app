@@ -1,14 +1,14 @@
-import {Todo} from './todo';
+import {Todo} from './models/todo';
 
 export class App {
   constructor() {
+    this.appName = 'Todo List';
+    this.todoTitle = '';
     this.todos = [
       new Todo('Task one', false),
       new Todo('Task two', false),
       new Todo('Task three', false)
     ];
-    this.todoTitle = ''
-    this.message = 'Todo List';
   }
 
   addTodo() {
