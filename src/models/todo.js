@@ -1,4 +1,4 @@
-import {IdGenerator} from "./idgenerator";
+import {IdGenerator} from '../utilities/idgenerator';
 
 export class Todo {
   constructor(title, completed = false) {

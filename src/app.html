@@ -4,7 +4,7 @@
     <form method="post" submit.trigger="addTodo()">
       <input type="text" placeholder="What would you like to do?" value.bind="todoTitle">
       <button type="submit">Add</button>
-    </form>
+    </form> 
     <ul>
       <li repeat.for="t of todos">
         <input type="checkbox" checked.bind='t.completed' />
